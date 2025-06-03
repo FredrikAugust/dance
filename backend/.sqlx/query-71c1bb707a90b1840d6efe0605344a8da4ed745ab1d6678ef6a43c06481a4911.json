@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO opportunities (id, location, start_time, end_time, image_urls, description, application_url) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Timestamp",
+        "Timestamp",
+        "TextArray",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "71c1bb707a90b1840d6efe0605344a8da4ed745ab1d6678ef6a43c06481a4911"
+}
