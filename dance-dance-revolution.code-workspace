@@ -1,7 +1,19 @@
 {
     "folders": [
         {
-            "path": "."
+            "path": "./backend",
+            "name": "Backend"
+        },
+        {
+            "path": "./frontend",
+            "name": "Frontend"
         }
-    ]
+    ],
+    "settings": {
+        "rust-analyzer.check.command": "clippy",
+        "rust-analyzer.checkOnSave": true,
+        "rust-analyzer.linkedProjects": [
+            "./backend/Cargo.toml"
+        ]
+    }
 }

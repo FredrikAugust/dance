@@ -1,14 +1,12 @@
-use std::str::FromStr;
-
-use anyhow::Result;
-use sqlx::{Executor, PgPool};
-use uuid::Uuid;
-
 use crate::{
     application::repositories::OpportunityRepo,
-    domain::{CompanyId, Opportunity, OpportunityId},
+    domain::{Opportunity, OpportunityId},
 };
+use anyhow::Result;
+use sqlx::PgPool;
+use url::Url;
 
+#[derive(Clone)]
 pub struct SqlRepo {
     pub pool: PgPool,
 }
@@ -19,25 +17,30 @@ impl OpportunityRepo for SqlRepo {
             .fetch_all(&self.pool)
             .await?;
 
-        return Ok(results
+        Ok(results
             .iter()
             .map(|row| Opportunity {
                 id: OpportunityId(row.id),
-                company_id: CompanyId(row.company_id),
                 location: row.location.clone(),
                 start_time: row.start_time.and_utc(),
-                end_time: row.end_time.and_then(|t| Some(t.and_utc())),
+                end_time: row.end_time.map(|t| t.and_utc()),
                 image_urls: vec![],
                 description: row.description.clone(),
                 application_url: None,
             })
-            .collect());
+            .collect())
     }
 
     async fn save(&self, opportunity: &Opportunity) -> Result<()> {
         sqlx::query!(
-            r#"INSERT INTO opportunities (id) VALUES ($1)"#,
-            opportunity.id.0
+            r#"INSERT INTO opportunities (id, location, start_time, end_time, image_urls, description, application_url) VALUES ($1, $2, $3, $4, $5, $6, $7)"#,
+            opportunity.id.0,
+            opportunity.location,
+            opportunity.start_time.naive_utc(),
+            opportunity.end_time.map(|t| t.naive_utc()),
+            &opportunity.image_urls.iter().map(Url::to_string).collect::<Vec<String>>(),
+            opportunity.description,
+            opportunity.application_url.as_ref().map(|url| url.to_string())
         )
         .execute(&self.pool)
         .await?;
