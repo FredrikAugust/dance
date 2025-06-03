@@ -1,19 +1,14 @@
 {
-    "folders": [
-        {
-            "path": "./backend",
-            "name": "Backend"
-        },
-        {
-            "path": "./frontend",
-            "name": "Frontend"
-        }
-    ],
-    "settings": {
-        "rust-analyzer.check.command": "clippy",
-        "rust-analyzer.checkOnSave": true,
-        "rust-analyzer.linkedProjects": [
-            "./backend/Cargo.toml"
-        ]
-    }
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"rust-analyzer.check.command": "clippy",
+		"rust-analyzer.checkOnSave": true,
+		"rust-analyzer.linkedProjects": ["./backend/Cargo.toml"],
+		"biome.requireConfiguration": false,
+		"biome.lsp.bin": "./frontend/node_modules/@biomejs/biome/bin/biome"
+	}
 }
