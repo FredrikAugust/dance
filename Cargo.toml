@@ -1,0 +1,19 @@
+[package]
+name = "dance-dance-revolution"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.40.0", features = ["full"] }
+chrono = { version = "0.4.41", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }
+uuid = { version = "1.17.0", features = ["v4", "serde"] }
+url = { version = "2.5.0", features = ["serde"] }
+anyhow = "1.0.98"
+sqlx = { version = "0.8", features = [
+    "runtime-tokio",
+    "tls-native-tls",
+    "postgres",
+    "uuid",
+    "chrono",
+] }
