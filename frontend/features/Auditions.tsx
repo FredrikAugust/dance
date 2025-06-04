@@ -1,7 +1,5 @@
 "use server";
 
-import { format } from "date-fns";
-import { Suspense } from "react";
 import {
 	Card,
 	CardContent,
@@ -11,6 +9,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { API_URL } from "@/lib/utils";
+import { format } from "date-fns";
+import { Suspense } from "react";
 
 type Opportunity = {
 	id: string;
@@ -58,7 +58,11 @@ async function AuditionsList({
 							? format(new Date(audition.end_time), "MMM d, yyyy")
 							: "TBA"}
 					</CardContent>
-					<CardFooter></CardFooter>
+					{audition.application_url && (
+						<CardFooter>
+							<a href={audition.application_url}>Apply</a>
+						</CardFooter>
+					)}
 				</Card>
 			))}
 		</div>

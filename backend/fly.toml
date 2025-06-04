@@ -1,6 +1,9 @@
 app = "dance-cxhveq"
 primary_region = "cdg"
 
+[deploy]
+release_command = "cargo sqlx migrate run"
+
 [env]
 PORT = "8080"
 RUST_LOG = "info"
