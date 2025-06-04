@@ -1,5 +1,6 @@
 "use server";
 
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -60,7 +61,15 @@ async function AuditionsList({
 					</CardContent>
 					{audition.application_url && (
 						<CardFooter>
-							<a href={audition.application_url}>Apply</a>
+							<a
+								rel="noopener noreferrer"
+								target="_blank"
+								href={audition.application_url}
+							>
+								<Button size="sm" variant="outline" className="cursor-pointer">
+									Apply
+								</Button>
+							</a>
 						</CardFooter>
 					)}
 				</Card>

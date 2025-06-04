@@ -26,7 +26,10 @@ impl OpportunityRepo for SqlRepo {
                 end_time: row.end_time.map(|t| t.and_utc()),
                 image_urls: vec![],
                 description: row.description.clone(),
-                application_url: None,
+                application_url: row
+                    .application_url
+                    .as_ref()
+                    .map(|url| Url::parse(url).unwrap()),
             })
             .collect())
     }
