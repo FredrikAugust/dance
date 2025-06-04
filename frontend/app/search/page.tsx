@@ -1,9 +1,3 @@
-export default async function Settings({
-	searchParams,
-}: {
-	searchParams: { [key: string]: string | string[] | undefined };
-}) {
-	const query = searchParams.query as string;
-
-	return <h1>hello? {query}</h1>;
+export default async function Search() {
+	return <h1>hello?</h1>;
 }
