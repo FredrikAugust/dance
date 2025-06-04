@@ -9,6 +9,7 @@
 		"check:ci": "biome ci",
 		"check": "biome check --fix"
 	},
+	"packageManager": "pnpm@10.6.2",
 	"dependencies": {
 		"@radix-ui/react-separator": "^1.1.7",
 		"@radix-ui/react-slot": "^1.2.3",
