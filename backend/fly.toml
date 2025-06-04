@@ -3,11 +3,11 @@ primary_region = "cdg"
 
 [env]
 PORT = "8080"
+RUST_LOG = "info"
 
 [http_service]
 auto_start_machines = true
 force_https = true
-internal_port = 8_084
 min_machines_running = 0
 processes = ["app"]
 

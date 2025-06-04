@@ -1,4 +1,5 @@
 use axum::routing::get;
+use log::info;
 use sqlx::PgPool;
 
 use crate::infrastructure::repositories::SqlRepo;
@@ -19,7 +20,14 @@ pub async fn run_web_server() -> anyhow::Result<()> {
         .route("/opportunities", get(routes::opportunities::get_all))
         .with_state(app_state);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8084").await?;
+    let listener = tokio::net::TcpListener::bind(format!(
+        "0.0.0.0:{}",
+        std::env::var("PORT").unwrap_or("8084".to_string())
+    ))
+    .await?;
+
+    info!("Listening on {}", listener.local_addr().unwrap());
+
     axum::serve(listener, app).await?;
 
     Ok(())
