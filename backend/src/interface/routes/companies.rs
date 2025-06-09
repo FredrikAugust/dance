@@ -3,7 +3,7 @@ use serde::Deserialize;
 use uuid::Uuid;
 
 use crate::{
-    application::queries::companies::{create_company, get_all_companies},
+    application::{mutations::companies::create_company, queries::companies::get_all_companies},
     domain::{Company, CompanyId},
     interface::state::AppState,
 };

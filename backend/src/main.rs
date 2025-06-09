@@ -8,6 +8,8 @@ mod interface;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    let _ = dotenvy::dotenv();
+
     env_logger::init();
 
     info!("Starting dance-dance-revolution backend");

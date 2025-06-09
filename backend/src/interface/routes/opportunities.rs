@@ -4,7 +4,9 @@ use serde::Deserialize;
 use uuid::Uuid;
 
 use crate::{
-    application::queries::opportunities::{create_opportunity, get_all_opportunities},
+    application::{
+        mutations::opportunities::create_opportunity, queries::opportunities::get_all_opportunities,
+    },
     domain::{CompanyId, Opportunity, OpportunityId},
     interface::state::AppState,
 };

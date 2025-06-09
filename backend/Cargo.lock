@@ -392,6 +392,7 @@ dependencies = [
  "axum-login",
  "chrono",
  "derive_more",
+ "dotenvy",
  "env_logger",
  "log",
  "serde",

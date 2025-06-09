@@ -10,17 +10,21 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { API_URL } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { Suspense } from "react";
+import Filters from "./Filters";
 
 type Opportunity = {
 	id: string;
+	company_id: string;
+	title: string;
+	description: string;
 	location: string;
 	start_time: string;
 	end_time: string | null;
 	image_urls: string[];
-	description: string;
 	application_url: string | null;
+	application_deadline: string | null;
 };
 
 async function getAuditions(): Promise<Opportunity[]> {
@@ -32,9 +36,12 @@ async function getAuditions(): Promise<Opportunity[]> {
 export default async function Auditions() {
 	const auditionsPromise = getAuditions();
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<AuditionsList auditionsPromise={auditionsPromise} />
-		</Suspense>
+		<div className="flex flex-col gap-4">
+			<Filters />
+			<Suspense fallback={<div>Loading...</div>}>
+				<AuditionsList auditionsPromise={auditionsPromise} />
+			</Suspense>
+		</div>
 	);
 }
 
@@ -45,22 +52,31 @@ async function AuditionsList({
 }) {
 	const auditions = await auditionsPromise;
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 			{auditions.map((audition) => (
-				<Card key={audition.id}>
+				<Card key={audition.id} className="flex flex-col">
 					<CardHeader>
-						<CardTitle>{audition.description}</CardTitle>
-						<CardDescription>{audition.location}</CardDescription>
+						<CardTitle className="flex flex-col gap-1">
+							<span className="text-xs text-muted-foreground">
+								{audition.company_id}
+							</span>
+							<span>{audition.title}</span>
+						</CardTitle>
+						<CardDescription className="flex flex-col">
+							<span>{audition.location}</span>
+							<span>
+								{format(new Date(audition.start_time), "MMM d, yyyy")} —{" "}
+								{audition.end_time
+									? format(new Date(audition.end_time), "MMM d, yyyy")
+									: "TBA"}
+							</span>
+						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<span className="font-medium">Duration:</span>{" "}
-						{format(new Date(audition.start_time), "MMM d, yyyy")} —{" "}
-						{audition.end_time
-							? format(new Date(audition.end_time), "MMM d, yyyy")
-							: "TBA"}
+						<p>{audition.description}</p>
 					</CardContent>
 					{audition.application_url && (
-						<CardFooter>
+						<CardFooter className="mt-auto flex gap-2 items-center justify-between">
 							<a
 								rel="noopener noreferrer"
 								target="_blank"
@@ -70,6 +86,18 @@ async function AuditionsList({
 									Apply
 								</Button>
 							</a>
+
+							{audition.application_deadline && (
+								<span className="text-sm text-muted-foreground">
+									deadline{" "}
+									{formatDistanceToNow(
+										new Date(audition.application_deadline),
+										{
+											addSuffix: true,
+										},
+									)}
+								</span>
+							)}
 						</CardFooter>
 					)}
 				</Card>
