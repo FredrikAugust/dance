@@ -1,0 +1,85 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO opportunities (id, company_id, title, description, location, start_time, end_time, image_urls, application_url, application_deadline) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "location",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "start_time",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 3,
+        "name": "end_time",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 4,
+        "name": "image_urls",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 5,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "application_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "company_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 8,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "application_deadline",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Timestamptz",
+        "Timestamptz",
+        "TextArray",
+        "Text",
+        "Timestamptz"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "3aa9ce8657d06b654dd94601f431e4c488ca5f6ab9f36d55278d018cd60e52ce"
+}
