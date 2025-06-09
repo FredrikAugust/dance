@@ -7,8 +7,8 @@
       "Left": [
         "Uuid",
         "Text",
-        "Timestamp",
-        "Timestamp",
+        "Timestamptz",
+        "Timestamptz",
         "TextArray",
         "Text",
         "Text"

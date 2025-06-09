@@ -18,6 +18,7 @@ pub async fn run_web_server() -> anyhow::Result<()> {
 
     let app = axum::Router::new()
         .route("/opportunities", get(routes::opportunities::get_all))
+        .route("/companies", get(routes::companies::get_all))
         .with_state(app_state);
 
     let listener = tokio::net::TcpListener::bind(format!(

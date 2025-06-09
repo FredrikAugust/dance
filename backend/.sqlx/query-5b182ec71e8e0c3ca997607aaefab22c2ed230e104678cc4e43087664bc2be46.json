@@ -16,12 +16,12 @@
       {
         "ordinal": 2,
         "name": "start_time",
-        "type_info": "Timestamp"
+        "type_info": "Timestamptz"
       },
       {
         "ordinal": 3,
         "name": "end_time",
-        "type_info": "Timestamp"
+        "type_info": "Timestamptz"
       },
       {
         "ordinal": 4,
@@ -37,6 +37,21 @@
         "ordinal": 6,
         "name": "application_url",
         "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "company_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 8,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "application_deadline",
+        "type_info": "Timestamptz"
       }
     ],
     "parameters": {
@@ -44,6 +59,9 @@
     },
     "nullable": [
       false,
+      false,
+      false,
+      true,
       false,
       false,
       true,
