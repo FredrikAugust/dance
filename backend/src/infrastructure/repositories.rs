@@ -19,9 +19,9 @@ impl OpportunityRepo for SqlRepo {
         Ok(results)
     }
 
-    async fn save(&self, opportunity: &Opportunity) -> Result<()> {
-        sqlx::query!(
-            r#"INSERT INTO opportunities (id, company_id, title, description, location, start_time, end_time, image_urls, application_url, application_deadline) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)"#,
+    async fn save(&self, opportunity: &Opportunity) -> Result<Opportunity> {
+        let result = sqlx::query_as!(Opportunity,
+            r#"INSERT INTO opportunities (id, company_id, title, description, location, start_time, end_time, image_urls, application_url, application_deadline) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"#,
             opportunity.id.0,
             opportunity.company_id.0,
             opportunity.title,
@@ -33,10 +33,10 @@ impl OpportunityRepo for SqlRepo {
             opportunity.application_url.as_ref().map(|url| url.to_string()),
             opportunity.application_deadline
         )
-        .execute(&self.pool)
+        .fetch_one(&self.pool)
         .await?;
 
-        Ok(())
+        Ok(result)
     }
 }
 
@@ -47,5 +47,18 @@ impl CompanyRepo for SqlRepo {
             .await?;
 
         Ok(results)
+    }
+
+    async fn save(&self, company: &Company) -> Result<Company> {
+        let result = sqlx::query_as!(Company, "INSERT INTO companies (id, name, description, website_url) VALUES ($1, $2, $3, $4) RETURNING *",
+            company.id.0,
+            company.name,
+            company.description,
+            company.website_url
+        )
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(result)
     }
 }

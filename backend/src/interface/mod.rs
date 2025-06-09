@@ -1,4 +1,4 @@
-use axum::routing::get;
+use axum::routing::{get, post};
 use log::info;
 use sqlx::PgPool;
 
@@ -18,7 +18,9 @@ pub async fn run_web_server() -> anyhow::Result<()> {
 
     let app = axum::Router::new()
         .route("/opportunities", get(routes::opportunities::get_all))
+        .route("/opportunities", post(routes::opportunities::create))
         .route("/companies", get(routes::companies::get_all))
+        .route("/companies", post(routes::companies::create))
         .with_state(app_state);
 
     let listener = tokio::net::TcpListener::bind(format!(

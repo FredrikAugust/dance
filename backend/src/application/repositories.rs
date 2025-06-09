@@ -4,9 +4,10 @@ use crate::domain::{Company, Opportunity};
 
 pub trait OpportunityRepo {
     async fn get_all(&self) -> Result<Vec<Opportunity>>;
-    async fn save(&self, opportunity: &Opportunity) -> Result<()>;
+    async fn save(&self, opportunity: &Opportunity) -> Result<Opportunity>;
 }
 
 pub trait CompanyRepo {
     async fn get_all(&self) -> Result<Vec<Company>>;
+    async fn save(&self, company: &Company) -> Result<Company>;
 }
