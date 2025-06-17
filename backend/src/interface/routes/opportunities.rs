@@ -7,7 +7,10 @@ use crate::{
     application::{
         mutations::opportunities::create_opportunity, queries::opportunities::get_all_opportunities,
     },
-    domain::{CompanyId, Opportunity, OpportunityId},
+    domain::{
+        company::CompanyId,
+        opportunity::{Opportunity, OpportunityId},
+    },
     interface::state::AppState,
 };
 

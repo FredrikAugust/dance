@@ -1,6 +1,6 @@
 use anyhow::Result;
 
-use crate::domain::{Company, Opportunity};
+use crate::domain::{company::Company, opportunity::Opportunity};
 
 pub trait OpportunityRepo {
     async fn get_all(&self) -> Result<Vec<Opportunity>>;

@@ -4,7 +4,7 @@ use uuid::Uuid;
 
 use crate::{
     application::{mutations::companies::create_company, queries::companies::get_all_companies},
-    domain::{Company, CompanyId},
+    domain::company::{Company, CompanyId},
     interface::state::AppState,
 };
 

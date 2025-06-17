@@ -1,6 +1,7 @@
 use crate::{
     application::repositories::{CompanyRepo, OpportunityRepo},
-    domain::{Company, Opportunity},
+    domain::company::Company,
+    domain::opportunity::Opportunity,
 };
 use anyhow::Result;
 use sqlx::PgPool;

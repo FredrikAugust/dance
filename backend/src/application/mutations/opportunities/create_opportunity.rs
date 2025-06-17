@@ -1,4 +1,4 @@
-use crate::{application::repositories::OpportunityRepo, domain::Opportunity};
+use crate::{application::repositories::OpportunityRepo, domain::opportunity::Opportunity};
 
 pub async fn handle(
     repo: &impl OpportunityRepo,
