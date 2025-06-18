@@ -1,11 +1,13 @@
 use crate::{
     application::repositories::{CompanyRepo, OpportunityRepo},
-    domain::company::Company,
-    domain::opportunity::Opportunity,
+    domain::{company::Company, opportunity::Opportunity},
 };
 use anyhow::Result;
 use sqlx::PgPool;
 
+// TODO: this should not be a single repository, but rather a sql connection pool which is passed
+// to different repository structs which are then used to implement _one_ repo trait.
+// e.g. OpportunityRepo struct implements a struct of similar name
 #[derive(Clone)]
 pub struct SqlRepo {
     pub pool: PgPool,

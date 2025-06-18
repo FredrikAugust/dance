@@ -2,7 +2,7 @@ use axum::routing::{get, post};
 use log::info;
 use sqlx::PgPool;
 
-use crate::infrastructure::repositories::SqlRepo;
+use crate::infrastructure::{auth::AuthenticationService, repositories::SqlRepo};
 
 mod routes;
 mod state;
@@ -12,8 +12,14 @@ pub async fn run_web_server() -> anyhow::Result<()> {
         .await
         .expect("Could not connect to database");
 
+    let sql_repo = SqlRepo { pool };
     let app_state = state::AppState {
-        repo: SqlRepo { pool },
+        repo: sql_repo.clone(),
+        authentication_service: AuthenticationService {
+            sql_repo: sql_repo.clone(),
+            salt: std::env::var("PASSWORD_SALT")?,
+            argon2_config: argon2::Config::default(),
+        },
     };
 
     let app = axum::Router::new()
@@ -21,6 +27,7 @@ pub async fn run_web_server() -> anyhow::Result<()> {
         .route("/opportunities", post(routes::opportunities::create))
         .route("/companies", get(routes::companies::get_all))
         .route("/companies", post(routes::companies::create))
+        .route("/login", post(routes::auth::login))
         .with_state(app_state);
 
     let listener = tokio::net::TcpListener::bind(format!(

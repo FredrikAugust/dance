@@ -20,6 +20,6 @@ sqlx = { version = "0.8.6", features = [
   "uuid",
   "chrono",
 ] }
-axum-login = "0.17.0"
 derive_more = { version = "2.0.1", features = ["from", "into"] }
 dotenvy = "0.15.7"
+rust-argon2 = "2.1.0"
