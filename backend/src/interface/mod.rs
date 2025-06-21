@@ -2,8 +2,11 @@ use axum::routing::{get, post};
 use log::info;
 use sqlx::PgPool;
 
-use crate::infrastructure::{auth::AuthenticationService, repositories::SqlRepo};
+use crate::infrastructure::{
+    auth::AuthenticationService, repositories::SqlRepo, services::SessionStore,
+};
 
+mod error;
 mod routes;
 mod state;
 
@@ -15,6 +18,9 @@ pub async fn run_web_server() -> anyhow::Result<()> {
     let sql_repo = SqlRepo { pool };
     let app_state = state::AppState {
         repo: sql_repo.clone(),
+        session_store: SessionStore {
+            store: Default::default(),
+        },
         authentication_service: AuthenticationService {
             sql_repo: sql_repo.clone(),
             salt: std::env::var("PASSWORD_SALT")?,
@@ -27,7 +33,9 @@ pub async fn run_web_server() -> anyhow::Result<()> {
         .route("/opportunities", post(routes::opportunities::create))
         .route("/companies", get(routes::companies::get_all))
         .route("/companies", post(routes::companies::create))
+        // Authentication
         .route("/login", post(routes::auth::login))
+        .route("/register", post(routes::auth::register))
         .with_state(app_state);
 
     let listener = tokio::net::TcpListener::bind(format!(

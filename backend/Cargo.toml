@@ -12,7 +12,8 @@ url = { version = "2.5.4", features = ["serde"] }
 log = "0.4.27"
 env_logger = "0.11.8"
 anyhow = "1.0.98"
-axum = "0.8.4"
+axum = { version = "0.8.4", features = ["macros"] }
+axum-extra = { version = "0.10.1", features = ["cookie"] }
 sqlx = { version = "0.8.6", features = [
   "runtime-tokio",
   "tls-rustls",
@@ -23,3 +24,4 @@ sqlx = { version = "0.8.6", features = [
 derive_more = { version = "2.0.1", features = ["from", "into"] }
 dotenvy = "0.15.7"
 rust-argon2 = "2.1.0"
+time = "0.3.41"

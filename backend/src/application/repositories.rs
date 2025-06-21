@@ -1,10 +1,6 @@
 use anyhow::Result;
 
-use crate::domain::{
-    company::Company,
-    opportunity::Opportunity,
-    user::{User, UserId},
-};
+use crate::domain::{company::Company, opportunity::Opportunity, user::User};
 
 pub trait OpportunityRepo {
     async fn get_all(&self) -> Result<Vec<Opportunity>>;
@@ -22,5 +18,5 @@ pub trait AuthRepo {
         email: &str,
         password: &str,
     ) -> Result<User>;
-    async fn get_user_with_id(&self, id: &UserId) -> Result<Option<User>>;
+    async fn register_with_email_and_password(&self, email: &str, password: &str) -> Result<User>;
 }
